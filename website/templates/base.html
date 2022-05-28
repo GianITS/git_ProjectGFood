@@ -11,11 +11,34 @@
     <link rel="icon" href="{{ url_for('static', filename='images/logo48px.png')}}">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
       
-    <title>Cosa mangio stasera - {% block title%} {% endblock title %}</title>
+    <title>Cosa mangio? - {% block title%} {% endblock title %}</title>
 </head>
 <body>
+    <header class="header">
+        <a href="{{ url_for('views.home')}}" class="sideLeft">
+            <div class="logo">
+                <div class="imgLogo"></div>
+            </div>
+            <h1>CosaMangio?</h1>
+        </a>
+        <div class="sideRight">
+            <div class="user">
+                <div class="imgUser"></div>
+            </div>
+            <div class="menu">
+                <div class="imgMenu"></div>
+            </div>
+        </div>
+    </header>
     
-    <h1>Cosa mangio stasera Homepage</h1>
+    {% block content %}
+        
+    {% endblock %}
+    <div class="outerBtnS">
+        <div class="btnSearch">
+            <a href="{{ url_for('views.search')}}"><div class="imgBtnS"></div></a>
+        </div>
+    </div>
 
     <script src="{{ url_for('static', filename='app.js')}}"></script>
 </body>
