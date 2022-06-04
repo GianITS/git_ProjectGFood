@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title%} Risultati Ricerca {% endblock title %}
+{% block content %}
+
+        <h3>{{ recipes|length }} ricette trovate con: {{ ingredients }}</h3>
+    {% for recipe in recipes %}
+        <p>{{ recipe }}</p>
+        <br>
+    {% endfor %}
+
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title%}  {% endblock title %}
+{% block content %}
+
+    {% for v in recipe %}
+        <p>{{ v }}</p>
+    {% endfor %}
+
+{% endblock %}
