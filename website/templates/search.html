@@ -9,10 +9,30 @@
                 <div class="imgClose"></div>
             </a>
             <h2>Cerca...</h2>
-            <form action="POST">
-
+            <form action="" method="post">
+                {{form.hidden_tag()}}
+                {{form.numIngredients.label}}{{form.numIngredients(id_="NumIng")}}
+                {{form.ingredientOne.label}}{{form.ingredientOne()}}
+                {{form.ingredientTwo.label(class_="ing LTwo")}}{{form.ingredientTwo(class_="ing Two")}}
+                {{form.ingredientThree.label(class_="ing LThree")}}{{form.ingredientThree(class_="ing Three")}}
+                {{form.submit(class_="btnSub")}}
             </form>
         </div>
     </div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            {% if category == 'success' %}
+                <div class="message">
+                    <p>{{ message }}</p>
+                </div>
+            {% else %}
+                <div class="message error">
+                    <p>{{ message }}</p>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
 
 {% endblock %}
