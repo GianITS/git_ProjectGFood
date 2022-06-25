@@ -18,7 +18,7 @@ li{
 .message{
     position: fixed;
     bottom: 100px;
-    right: -320px;
+    right: -100%;
     width: 80%;
     height: 60px;
     display: flex;
@@ -39,7 +39,7 @@ li{
 }
 @keyframes showMsg {
     0%{
-        right: -320px;
+        right: -100%;
     }
     20%{
         right: 50%;
@@ -50,7 +50,7 @@ li{
         transform: translateX(50%);
     }
     100%{
-        right: -320px;
+        right: -100%;
     }
 }
 
