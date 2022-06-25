@@ -4,6 +4,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, SelectField, EmailField
 from wtforms.validators import DataRequired
 from .models import recipes_collection
+import re
 
 views = Blueprint('views', __name__)
 
@@ -61,12 +62,22 @@ def search_results(ing1, ing2, ing3):
     if ing3 != " ":
         ingredients += f", {ing3}"
 
-    if ing2 == " " and ing3 == " ":
-        recipes = list(recipes_collection.find({"ingredients": {"$regex": ing1}},{"_id": 0}))
-    elif ing2 != " " and ing3 == " ":
-        recipes = list(recipes_collection.find({"ingredients": {"$all": ["/guanciale/","/cipolla/"]}},{"_id": 0}))
-    else:
-        recipes = list(recipes_collection.find({"ingredients": {"$regex": ing1, "$regex": ing2, "$regex": ing3}},{"_id": 0}))
+    recipes = list(recipes_collection.find({"ingredients": {"$regex": ing1}},{"_id": 0}))
+
+    if ing2 != " ":
+        middleRes2 = []
+        for recipe in recipes:
+            res2 = re.search(rf".*({ing2}).*", recipe['ingredients'])
+            if res2 != None:
+                middleRes2.append(recipe)
+        recipes = middleRes2
+        if ing3 != " ":
+            middleRes3 = []
+            for recipe in recipes:
+                res3 = re.search(rf".*({ing3}).*", recipe['ingredients'])
+                if res3 != None:
+                    middleRes3.append(recipe)
+            recipes = middleRes3
     
     if len(recipes) == 0:
         flash("Nessuna ricetta trovata", "error")
@@ -75,7 +86,7 @@ def search_results(ing1, ing2, ing3):
         nameRecipe = recipes[0]['name']
         return redirect(url_for('views.single_recipe', name=nameRecipe))
 
-    return render_template('search_results.html', ingredients=ingredients, recipes=recipes)
+    return render_template('search_results.html', ingredients=ingredients, recipes=recipes, middleRes2=middleRes2)
 
 @views.route('/Ricetta/<name>')
 def single_recipe(name):
