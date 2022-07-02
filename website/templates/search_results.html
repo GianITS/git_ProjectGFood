@@ -9,6 +9,11 @@
     {% endfor %}
     {% if middleRes2|count > 0 %}
         <h3>Ti consigliamo anche...</h3>
+        {% for res in middleRes1 %}
+        <p>{{ res }}</p>
+        <br>
+        {% endfor %}
+        <p>oppure...</p>
         {% for res in middleRes2 %}
         <p>{{ res }}</p>
         <br>

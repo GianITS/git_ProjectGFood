@@ -26,8 +26,7 @@ def search():
     ing1 = ""
     ing2 = ""
     ing3 = ""
-    simbols = [chr(x) for x in range(ord('a'), ord('z') + 1)]
-    numbers = [1,2,3,4,5,6,7,8,9,0]
+    prevUrl = request.referrer
 
     form=FormSearch()
     if form.validate_on_submit():
@@ -51,7 +50,7 @@ def search():
     form.ingredientTwo.data = ""
     form.ingredientThree.data = ""
     
-    return render_template('search.html', form=form)
+    return render_template('search.html', form=form, prevUrl=prevUrl)
 
 
 @views.route('/Risultati_ricerca/<ing1>/<ing2>/<ing3>')
@@ -63,20 +62,22 @@ def search_results(ing1, ing2, ing3):
         ingredients += f", {ing3}"
 
     recipes = list(recipes_collection.find({"ingredients": {"$regex": ing1}},{"_id": 0}))
-
+    middleRes1 = recipes
+    middleRes2 = []
+    middleRes3 = []
     if ing2 != " ":
-        middleRes2 = []
         for recipe in recipes:
             res2 = re.search(rf".*({ing2}).*", recipe['ingredients'])
             if res2 != None:
                 middleRes2.append(recipe)
-        recipes = middleRes2
+        if len(middleRes2) > 0:
+            recipes = middleRes2
         if ing3 != " ":
-            middleRes3 = []
             for recipe in recipes:
                 res3 = re.search(rf".*({ing3}).*", recipe['ingredients'])
                 if res3 != None:
                     middleRes3.append(recipe)
+        if len(middleRes3) > 0:
             recipes = middleRes3
     
     if len(recipes) == 0:
@@ -86,7 +87,7 @@ def search_results(ing1, ing2, ing3):
         nameRecipe = recipes[0]['name']
         return redirect(url_for('views.single_recipe', name=nameRecipe))
 
-    return render_template('search_results.html', ingredients=ingredients, recipes=recipes, middleRes2=middleRes2)
+    return render_template('search_results.html', ingredients=ingredients, recipes=recipes, middleRes2=middleRes2, middleRes1=middleRes1)
 
 @views.route('/Ricetta/<name>')
 def single_recipe(name):
