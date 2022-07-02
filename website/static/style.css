@@ -30,28 +30,12 @@ li{
     font-size: 20px;
     font-weight: 600;
     z-index: 1000;
-    animation: showMsg 6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: slideInOut 6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     animation-delay: 1s;
     box-shadow: 7px 7px 13px rgba(0, 0, 0, .4);
 }
 .message.error{
     background: linear-gradient(90deg, rgb(238, 7, 7) 0%, rgb(242, 96, 51) 100%);
-}
-@keyframes showMsg {
-    0%{
-        right: -100%;
-    }
-    20%{
-        right: 50%;
-        transform: translateX(50%);
-    }
-    80%{
-        right: 50%;
-        transform: translateX(50%);
-    }
-    100%{
-        right: -100%;
-    }
 }
 
 /* Base.html --------------------------------------------------------------------*/
@@ -76,7 +60,7 @@ body{
     height: 80px;
     background: linear-gradient(115deg, var(--primary-color), var(--secondary-color));
     padding: 10px 15px;
-    z-index: 3;
+    z-index: 4;
 }
 .header .sideLeft,
 .header .sideRight{
@@ -120,6 +104,7 @@ body{
     position: relative;
     width: 30px;
     aspect-ratio: 1;
+    cursor: pointer;
 }
 .header .sideRight .menu .imgMenu{
     position: absolute;
@@ -149,6 +134,52 @@ body{
 .header .sideRight .menu .imgMenu::after{
     transform: translate(-50%, 6px);
 }
+.header .sideRight .containerMenu{
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    opacity: 0;
+    pointer-events: none;
+    z-index: -1;
+}
+.header .sideRight .containerMenu.showMenu{
+    opacity: 1;
+    pointer-events: all;
+    z-index: 4;
+}
+.header .sideRight .containerMenu.showMenu .contentMenu{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    height: 90%;
+    padding: 10px;
+    border-radius: 50px;
+    background-color: rgba(255, 255, 255, .7);
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, .4);
+    backdrop-filter: blur(2px);
+    z-index: 10;
+}
+.header .sideRight .containerMenu.showMenu .contentMenu p{
+    font-size: large;
+    margin: 10px 0;
+}
+.header .sideRight .containerMenu.showMenu .contentMenu.slideIn{
+    animation: slideIn .8s ease-in-out;
+}
+.header .sideRight .containerMenu.showMenu .contentMenu.slideOut{
+    animation: slideOut .8s ease-in-out;
+}
+#btnCloseMenu{
+    cursor: pointer;
+}
 .outerBtnS{
     position: fixed;
     bottom: 20px;
@@ -172,23 +203,6 @@ body{
     height: 100%;
     border-radius: 50%;
     background: url('images/search50px.png')no-repeat center center;
-}
-@keyframes rotate {
-    0%{
-        transform: rotate(0) scale(1);
-    }
-    5%{
-        transform: rotate(0) scale(1);
-    }
-    35%{
-        transform: rotate(360deg) scale(1.1);
-    }
-    50%{
-        transform: translate(360deg) scale(1);
-    }
-    100%{
-        transform: rotate(360deg) scale(1);
-    }
 }
 
 /* homepage.html -----------------------------------------------------------------*/
@@ -234,20 +248,6 @@ body{
     transform: scale(0.7);
     animation: fadeIn 1s ease-in-out forwards;
 }
-@keyframes fadeIn {
-    0%{
-        opacity: 0;
-        transform: scale(0.7);
-    }
-    40%{
-        opacity: 0;
-        transform: scale(0.7);
-    }
-    100%{
-        opacity: 1;
-        transform: scale(1);
-    }
-}
 .container .contentSearch{
     display: flex;
     flex-direction: column;
@@ -257,20 +257,20 @@ body{
     height: 90%;
     padding: 10px;
 }
-.container .contentSearch .BtnClose{
+.BtnClose{
     position: absolute;
     top: 20px;
     right: 20px;
     width: 40px;
     aspect-ratio: 1;
 }
-.container .contentSearch .BtnClose .imgClose{
+.BtnClose .imgClose{
     position: relative;
     width: 100%;
     height: 100%;
 }
-.container .contentSearch .BtnClose .imgClose::before,
-.container .contentSearch .BtnClose .imgClose::after{
+.BtnClose .imgClose::before,
+.BtnClose .imgClose::after{
     content: "";
     position: absolute;
     top: 50%;
@@ -282,7 +282,7 @@ body{
     transform: translate(-50%, -50%) rotate(45deg);
     box-shadow: 6px 4px 5px rgba(0, 0, 0, .4);
 }
-.container .contentSearch .BtnClose .imgClose::after{
+.BtnClose .imgClose::after{
     transform: translate(-50%, -50%) rotate(-45deg);
     box-shadow: -1px 4px 5px rgba(0, 0, 0, .4);
 }
@@ -310,4 +310,80 @@ body{
 .container .contentSearch form .btnSub{
     width: 100%;
     height: 30px;
+}
+
+/* animations -----------------------------------------------------------------*/
+
+@keyframes fadeIn {
+    0%{
+        opacity: 0;
+        transform: scale(0.7);
+    }
+    40%{
+        opacity: 0;
+        transform: scale(0.7);
+    }
+    100%{
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes rotate {
+    0%{
+        transform: rotate(0) scale(1);
+    }
+    5%{
+        transform: rotate(0) scale(1);
+    }
+    35%{
+        transform: rotate(360deg) scale(1.1);
+    }
+    50%{
+        transform: translate(360deg) scale(1);
+    }
+    100%{
+        transform: rotate(360deg) scale(1);
+    }
+}
+
+@keyframes slideInOut {
+    0%{
+        right: -100%;
+    }
+    20%{
+        right: 50%;
+        transform: translateX(50%);
+    }
+    80%{
+        right: 50%;
+        transform: translateX(50%);
+    }
+    100%{
+        right: -100%;
+    }
+}
+
+@keyframes slideIn {
+    0%{
+        right: -100%;
+    }
+    10%{
+        right: -100%;
+    }
+    100%{
+        right: 0;
+    }
+}
+
+@keyframes slideOut {
+    0%{
+        right: 0;
+    }
+    10%{
+        right: 0;
+    }
+    100%{
+        right: -100%;
+    }
 }
