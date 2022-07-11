@@ -12,3 +12,8 @@ recipes_collection = db['recipes']
 app = Flask(__name__)
 app.config['MONGO_URI'] = "mongodb+srv://GianITS:ProjectITS33@clusterits.do6lt.mongodb.net/search_recipes?retryWrites=true&w=majority"
 mongo = PyMongo(app, tlsCAFile=certifi.where())
+
+class Recipe:
+    def __init__(self, name, ingredients):
+        self.name = name
+        self.ingredients = ingredients
