@@ -5,16 +5,24 @@
     <div class="frameBlur"></div>
     <div class="container">
         <div class="contentSearch">
-            <a href="{{ url_for('views.home')}}" class="BtnClose">
+            <a href="{{ prevUrl }}" class="BtnClose">
                 <div class="imgClose"></div>
             </a>
             <h2>Cerca...</h2>
             <form action="" method="post">
                 {{form.hidden_tag()}}
-                {{form.numIngredients.label}}{{form.numIngredients(id_="NumIng")}}
-                {{form.ingredientOne.label}}{{form.ingredientOne()}}
-                {{form.ingredientTwo.label(class_="ing LTwo")}}{{form.ingredientTwo(class_="ing Two")}}
-                {{form.ingredientThree.label(class_="ing LThree")}}{{form.ingredientThree(class_="ing Three")}}
+                <div class="label">
+                    {{form.numIngredients.label}}{{form.numIngredients(id_="NumIng")}}
+                </div>
+                <div class="label">
+                    {{form.ingredientOne.label}}{{form.ingredientOne(placeholder_="ingrediente...")}}
+                </div>
+                <div class="label">
+                    {{form.ingredientTwo.label(class_="ing LTwo")}}{{form.ingredientTwo(class_="ing Two", placeholder_="ingrediente...")}}
+                </div>
+                <div class="label">
+                    {{form.ingredientThree.label(class_="ing LThree")}}{{form.ingredientThree(class_="ing Three", placeholder_="ingrediente...")}}
+                </div>
                 {{form.submit(class_="btnSub")}}
             </form>
         </div>

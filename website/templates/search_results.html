@@ -1,18 +1,36 @@
 {% extends 'base.html' %}
 {% block title%} Risultati Ricerca {% endblock title %}
 {% block content %}
-
+    <div class="bodyResults">
         <h3>{{ recipes|length }} ricette trovate con: {{ ingredients }}</h3>
-    {% for recipe in recipes %}
-        <p>{{ recipe }}</p>
-        <br>
-    {% endfor %}
-    {% if middleRes2|count > 0 %}
+        <div class="containerResults">
+            {% for recipe in recipes %}
+            <div class="recipe">
+                <img src="/static/images/img.jpg" alt="" class="img">
+                <!-- <img src="/static/images/" + {{ recipe.image }} alt="" class="img"> -->
+                <a href="">{{ recipe.name }} {{ recipe.ingredients }}</a>
+            </div>
+            {% endfor %}
+        </div>
+        {% if middleRes2|count > 0 %}
         <h3>Ti consigliamo anche...</h3>
-        {% for res in middleRes2 %}
-        <p>{{ res }}</p>
-        <br>
-        {% endfor %}
-    {% endif %}
-
+        <div class="containerResults">
+            {% for r in middleRes1 %}
+            <div class="recipe">
+                <img src="/static/images/img.jpg" alt="" class="img">
+                <a href="">{{ r.name }} {{ r.ingredients }}</a>
+            </div>
+            {% endfor %}
+        </div>
+        <p>oppure...</p>
+        <div class="containerResults">
+            {% for rec in middleRes2 %}
+            <div class="recipe">
+                <img src="/static/images/img.jpg" alt="" class="img">
+                <a href="">{{ rec.name }} {{ rec.ingredients }}</a>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
 {% endblock %}
