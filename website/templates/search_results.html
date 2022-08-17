@@ -2,7 +2,8 @@
 {% block title%} Risultati Ricerca {% endblock title %}
 {% block content %}
     <div class="bodyResults">
-        <h3>{{ recipes|length }} ricette trovate con: {{ ingredients }}</h3>
+        <h4><span>{{ recipes|length }}</span> ricette trovate con:</h4>
+        <h3>{{ ingredients }}</h3>
         <div class="containerResults">
             {% for recipe in recipes %}
             <div class="recipe">
@@ -33,4 +34,5 @@
         </div>
         {% endif %}
     </div>
+    {% include "footer.html" %}
 {% endblock %}
