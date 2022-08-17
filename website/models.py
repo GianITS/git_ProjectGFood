@@ -7,6 +7,8 @@ import certifi
 cluster = MongoClient("mongodb+srv://GianITS:ProjectITS33@clusterits.do6lt.mongodb.net", tlsCAFile=certifi.where())
 db = cluster['search_recipes']
 recipes_collection = db['recipes']
+admin_collection = db['Admin']
+users_collection = db['Users']
 
 # PyMongo for upload and download image ---------------------------------------------------------------------
 app = Flask(__name__)
