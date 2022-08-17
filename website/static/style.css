@@ -2,6 +2,8 @@
 :root{
     --primary-color: #f00;
     --secondary-color: #FF8A00;
+    --green-dark: rgb(26, 219, 71);
+    --green-light: rgb(175, 242, 51);
 }
 *{
     padding: 0;
@@ -9,7 +11,12 @@
     box-sizing: border-box;
     font-family: 'Poppins';
 }
+html{
+    height: 100%;
+    scroll-behavior: smooth;
+}
 a{
+    color: #000;
     text-decoration: none;
 }
 li{
@@ -42,7 +49,7 @@ li{
 
 body{
     width: 100%;
-    min-height: 100vh;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -57,10 +64,12 @@ body{
     top: 0;
     left: 0;
     width: 100%;
-    height: 80px;
+    height: 100px;
     background: linear-gradient(115deg, var(--primary-color), var(--secondary-color));
-    padding: 10px 15px;
+    padding: 10px 15px 30px;
     z-index: 4;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .3);
+    border-radius: 0 0 50% 50%/0 0 25% 25%;
 }
 .header .sideLeft,
 .header .sideRight{
@@ -75,7 +84,8 @@ body{
     align-items: center;
     width: 60px;
     aspect-ratio: 1;
-    background-color: rgba(255, 255, 255, .7);
+    background: radial-gradient(circle, rgba(255,255,255, .7)0%, rgba(255,255,255, .3)95%, rgba(255,255,255, .3)100%);
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, .3);
     border-radius: 50%;
 }
 .header .sideLeft .logo .imgLogo{
@@ -85,12 +95,14 @@ body{
     background-size: cover;
 }
 .header .sideLeft h1{
-    font-size: 20px;
+    font-size: 24px;
     font-weight: 500;
     color: #fff;
     margin-left: 8px;
+    text-shadow: 5px 5px 10px rgba(0, 0, 0, .3);
 }
 .header .sideRight .user{
+    position: relative;
     width: 45px;
     margin-right: 15px;
 }
@@ -99,6 +111,67 @@ body{
     height: 90%;
     background: url('images/user40px.png');
     background-size: cover;
+    cursor: pointer;
+}
+.header .sideRight .user .userMenu{
+    position: absolute;
+    top: 55px;
+    right: -225px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: min-content;
+    height: min-content;
+    padding: 10px 15px 25px;
+    border-radius: 15px;
+    background: linear-gradient(90deg, rgb(238, 7, 7) 0%, rgb(242, 96, 51) 100%);
+    transition: all .4s;
+}
+.header .sideRight .user .userMenu.showUserMenu{
+    right: -50px;
+}
+.header .sideRight .user a{
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+}
+.header .sideRight .user .login{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 18px;
+}
+.header .sideRight .user .login .log{
+    margin: 10px 0;
+}
+.header .sideRight .user .login .icoLogin,
+.header .sideRight .user .login .icoSignin{
+    width: 36px;
+    aspect-ratio: 1;
+    margin-right: 15px;
+}
+.header .sideRight .user .login .icoLogin{
+    background: url('images/user36W.png');
+}
+.header .sideRight .user .login .icoSignin{
+    background: url('images/piu36W.png');
+}
+.header .sideRight .user .icoUser,
+.header .sideRight .user .icoExit{
+    width: 36px;
+    aspect-ratio: 1;
+    margin: 15px 10px 0 0;
+}
+.header .sideRight .user .icoUser{
+    background: url('images/user36Color.png');
+}
+.header .sideRight .user .icoExit{
+    background: url('images/esci36W.png');
+}
+.header .sideRight .user a li{
+    font-size: 18px;
 }
 .header .sideRight .menu{
     position: relative;
@@ -115,6 +188,7 @@ body{
     border-radius: 5px;
     background-color: #000;
     transform: translate(-50%, -50%);
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, .3);
 }
 .header .sideRight .menu .imgMenu::before,
 .header .sideRight .menu .imgMenu::after{
@@ -127,6 +201,7 @@ body{
     border-radius: 5px;
     background-color: #000;
     transform: translate(-50%, -50%);
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, .3);
 }
 .header .sideRight .menu .imgMenu::before{
     transform: translate(-50%, -10px);
@@ -180,6 +255,32 @@ body{
 #btnCloseMenu{
     cursor: pointer;
 }
+.goUp{
+    position: fixed;
+    bottom: 110px;
+    right: -5px;
+    width: 55px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: linear-gradient(90deg, rgb(26, 219, 71) 0%, rgb(175, 242, 51) 100%);
+    box-shadow: 8px 8px 10px rgba(0, 0, 0, .4);
+    z-index: 3;
+    opacity: 0;
+    pointer-events: none;
+    animation: bouncing 2s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite;
+    transition: all .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.goUp.active{
+    right: 20px;
+    opacity: 1;
+    pointer-events: all;
+}
+.goUp .btnGoUp{
+    width: 100%;
+    aspect-ratio: 1;
+    background: url('images/next32.png')no-repeat center center;
+    transform: rotate(-90deg);
+}
 .outerBtnS{
     position: fixed;
     bottom: 20px;
@@ -205,17 +306,113 @@ body{
     background: url('images/search50px.png')no-repeat center center;
 }
 
+/* ! sign_in.html || login.html -----------------------------------------------------------------*/
+
+.container.Login,
+.container.Signin{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    height: 80%;
+    padding: 100px 20px 10px;
+    border-radius: 50px;
+    background-color: rgba(255, 255, 255);
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, .4);
+    z-index: 10;
+    transform: translate(-50%,-50%) scale(0.7);
+    animation: fadeIn 1s ease-in-out forwards;
+}
+.container.Login h2,
+.container.Signin h2{
+    position: absolute;
+    top: 0;
+    left: 50%;
+    margin-top: 80px;
+    transform: translateX(-50%);
+    font-size: 24px;
+    font-weight: 600;
+}
+.container.Login form,
+.container.Signin form{
+    width: 100%;
+}
+.container.Login form div,
+.container.Signin form div{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin: 10px 0;
+}
+.container.Login form div input,
+.container.Signin form div input{
+    width: 60%;
+    font-size: 18px;
+    text-align: end;
+    padding: 3px 10px 3px 7px;
+    outline: none;
+    border: none;
+    border-radius: 30px;
+    transition: all .2s linear;
+}
+.container.Login form div input:focus,
+.container.Signin form div input:focus{
+    box-shadow: 0 0 10px rgb(238, 7, 7);
+}
+.container.Signin form .logPassword.two{
+    display: flex;
+    align-items: center;
+}
+.container.Signin form .logPassword.two label{
+    width: 40%;
+}
+.container.Login form .btnSub,
+.container.Signin form .btnSub{
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    width: 80%;
+    height: 50px;
+    border-radius: 30px;
+    font-size: 22px;
+    font-weight: 500;
+    background: linear-gradient(90deg, rgb(26, 219, 71) 0%, rgb(175, 242, 51) 100%);
+    border: none;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, .4);
+    transform: translateX(-50%);
+    cursor: pointer;
+}
+
+/* ! login.html -----------------------------------------------------------------*/
+
+.container.Login{
+    height: 50%;
+}
+.container.Login h2{
+}
+
 /* ! homepage.html -----------------------------------------------------------------*/
 
-.img{
+.hero{
+    position: relative;
     width: 100%;
-    height: 550px;
+    min-height: 550px;
 }
-.immagine{
+.hero .img{
+    width: 100%;
+    height: 100%;
+}
+.hero .img .immagine{
     width: 100%;
     height: 100%;
     background: url('images/hero.jpg')no-repeat center;
     background-size: cover;
+}
+.main{
+    margin-bottom: 70px;
 }
 
 /* Search.html--------------------------------------------------------------------- */
@@ -357,7 +554,7 @@ body{
     cursor: pointer;
 }
 
-/* serach_results.html -----------------------------------------------------------------*/
+/* search_results.html -----------------------------------------------------------------*/
 
 .bodyResults{
     position: relative;
@@ -365,6 +562,13 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 30px 0 70px;
+}
+.bodyResults h4{
+    margin-top: 30px;
+}
+.bodyResults h4 span{
+    font-size: 20px;
 }
 .bodyResults h3{
     margin: 20px 0;
@@ -399,8 +603,53 @@ footer{
     position: relative;
     width: 100%;
     height: 200px;
-    margin-top: 100px;
-    background: linear-gradient(90deg, rgb(238, 7, 7) 0%, rgb(242, 96, 51) 100%);;
+    margin-top: auto;
+    background: linear-gradient(90deg, rgb(238, 7, 7) 0%, rgb(242, 96, 51) 100%);
+    border-radius: 50% 50% 0 0/20% 20% 0 0;
+    box-shadow: 0 -7px 12px rgba(0, 0, 0, .3);
+}
+.footer{
+    position: relative;
+    width: 100%;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+.footer .socialBtn{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+.footer .socialBtn li{
+    width: 60px;
+    aspect-ratio: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    font-size: 34px;
+    background: radial-gradient(circle, rgba(255,255,255, .7)0%, rgba(255,255,255, .3)90%, rgba(255,255,255, .3)100%);
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, .3);
+    margin-top: 10px;
+}
+.footer .socialBtn .btnyou{
+    margin: -10px 25px;
+}
+.footer .socialBtn .fa-facebook-f{
+    color: #1877f2;
+}
+.footer .socialBtn .fa-youtube{
+    color: #ff0000;
+}
+.footer .socialBtn .fa-twitter{
+    color: #1da1f2;
+}
+.footer .policy{
+    margin-bottom: 20px;
 }
 
 /* animations -----------------------------------------------------------------*/
@@ -476,5 +725,17 @@ footer{
     }
     100%{
         right: -100%;
+    }
+}
+
+@keyframes bouncing {
+    0%,100%{
+        transform: translateY(0);
+    }
+    20%,80%{
+        transform: translateY(0);
+    }
+    50%{
+        transform: translateY(-8px);
     }
 }
