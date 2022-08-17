@@ -2,15 +2,36 @@
 {% block title%} Homepage {% endblock title %}
 {% block content %}
 
-    <div class="img">
-        <div class="immagine"></div>
-    </div>
-    <div class="bo">
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis ex sunt, praesentium itaque quod quo debitis aliquam similique est necessitatibus beatae aperiam sapiente rerum culpa, eveniet iste cumque! Odio, voluptatibus.
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem dignissimos voluptatem soluta quo possimus optio officia itaque, voluptas quibusdam nisi sed, beatae perferendis reprehenderit quam architecto, quae porro molestias esse.
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempore rem non ratione, magnam dignissimos eveniet harum quo a impedit quos architecto itaque qui repellendus iure, aut accusamus adipisci ullam minima!
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere ex tenetur fugiat temporibus odit sed, in ut, tempore voluptatum, quaerat aperiam neque. Totam laborum aspernatur beatae possimus odit nesciunt odio!
-        </p>
-    </div>
+    <section class="hero">
+        <div class="img" id="top">
+            <div class="immagine"></div>
+        </div>
+    </section>
+    <main class="main">
+        <div class="bo">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis ex sunt, praesentium itaque quod quo debitis aliquam similique est necessitatibus beatae aperiam sapiente rerum culpa, eveniet iste cumque! Odio, voluptatibus.
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem dignissimos voluptatem soluta quo possimus optio officia itaque, voluptas quibusdam nisi sed, beatae perferendis reprehenderit quam architecto, quae porro molestias esse.
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempore rem non ratione, magnam dignissimos eveniet harum quo a impedit quos architecto itaque qui repellendus iure, aut accusamus adipisci ullam minima!
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere ex tenetur fugiat temporibus odit sed, in ut, tempore voluptatum, quaerat aperiam neque. Totam laborum aspernatur beatae possimus odit nesciunt odio!
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempore rem non ratione, magnam dignissimos eveniet harum quo a impedit quos architecto itaque qui repellendus iure, aut accusamus adipisci ullam minima!
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere ex tenetur fugiat temporibus odit sed, in ut, tempore voluptatum, quaerat aperiam neque. Totam laborum aspernatur beatae possimus odit nesciunt odio!
+            </p>
+        </div>
+    </main>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                {% if category == 'success' %}
+                    <div class="message">
+                        {{ message }}
+                    </div>
+                {% else %}
+                    <div class="message error">
+                        {{ message }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
     {% include "footer.html" %}
 {% endblock %}
