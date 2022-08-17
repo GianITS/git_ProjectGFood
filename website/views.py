@@ -13,7 +13,6 @@ views = Blueprint('views', __name__)
 #     return render_template('base.html')
 
 # classe form search
-
 class FormSearch(FlaskForm):
     numIngredients = SelectField(u"Quanti ingredienti hai? ", choices=[("1", "1"), ("2", "2"), ("3", "3")])
     ingredientOne = StringField("Ingrediente 1: ", [DataRequired()])
