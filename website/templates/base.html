@@ -7,6 +7,7 @@
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link rel="icon" href="{{ url_for('static', filename='images/logo48px.png')}}">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
@@ -24,6 +25,26 @@
         <div class="sideRight">
             <div class="user">
                 <div class="imgUser"></div>
+                <div class="userMenu" id="userMenu">
+                    {% if "user" in session %}
+                        <ul>
+                            <a href=""><span class="icoUser"></span><li>{{ session['user'] }}</li></a>
+                            <a href="{{ url_for('auth.logout')}}"><span class="icoExit"></span><li>Esci</li></a>
+                        </ul>
+                    {% elif "admin" in session %}
+                        <ul>
+                            <a href=""><span class="icoUser"></span><li>{{ session['admin'] }}</li></a>
+                            <li>Modifica</li>
+                            <a href="{{ url_for('auth.logout')}}"><span class="icoExit"></span><li>Esci</li></a>
+                        </ul>
+                    {% else %}
+                        <div class="login">
+                            <a href="{{ url_for('auth.login')}}" class="log"><span class="icoLogin"></span>Accedi</a>
+                            <a href="{{ url_for('auth.sign_in')}}"><span class="icoSignin"></span>Registrati</a>
+                        </div>
+                    {% endif %}
+                    
+                </div>
             </div>
             <div class="menu">
                 <div class="imgMenu"></div>
@@ -45,6 +66,10 @@
     {% block content %}
         
     {% endblock %}
+    <div class="goUp">
+        <a href="#"><div class="btnGoUp"></div></a>
+        
+    </div>
     <div class="outerBtnS">
         <div class="btnSearch">
             <a href="{{ url_for('views.search')}}"><div class="imgBtnS"></div></a>
